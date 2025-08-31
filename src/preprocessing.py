@@ -83,20 +83,36 @@ def outliers_summary(df):
             print("Values:", outliers.values)
         print("-" * 50)
 
-def scale_standard(df, features):
-    scaler = StandardScaler()
-    df_scaled = df.copy()
-    df_scaled[features] = scaler.fit_transform(df[features])
-    return df_scaled
-
-def scale_minmax(df, features):
+def scale_minmax(X_train, X_test, features):
     scaler = MinMaxScaler()
-    df_scaled = df.copy()
-    df_scaled[features] = scaler.fit_transform(df[features])
-    return df_scaled
+    X_train_scaled = X_train.copy()
+    X_test_scaled = X_test.copy()
 
-def scale_robust(df, features):
+    scaler.fit(X_train[features])
+
+    X_train_scaled[features] = scaler.transform(X_train[features])
+    X_test_scaled[features] = scaler.transform(X_test[features])
+
+    return X_train_scaled, X_test_scaled
+
+def scale_standard(X_train, X_test, features):
+    scaler = StandardScaler()
+    X_train_scaled = X_train.copy()
+    X_test_scaled = X_test.copy()
+    
+    scaler.fit(X_train[features])
+    X_train_scaled[features] = scaler.transform(X_train[features])
+    X_test_scaled[features] = scaler.transform(X_test[features])
+    
+    return X_train_scaled, X_test_scaled
+
+def scale_robust(X_train, X_test, features):
     scaler = RobustScaler()
-    df_scaled = df.copy()
-    df_scaled[features] = scaler.fit_transform(df[features])
-    return df_scaled
+    X_train_scaled = X_train.copy()
+    X_test_scaled = X_test.copy()
+    
+    scaler.fit(X_train[features])
+    X_train_scaled[features] = scaler.transform(X_train[features])
+    X_test_scaled[features] = scaler.transform(X_test[features])
+    
+    return X_train_scaled, X_test_scaled
