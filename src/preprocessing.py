@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
@@ -29,17 +30,18 @@ def correlation_plot(source):
     sns.heatmap(corr, cmap = "YlGnBu", annot = True)
     plt.show()
 
-def split(source, target = "NObeyesdad"):
-    data_dir = "/Users/dihanislamdhrubo/Downloads/CSE422-Lab-Project-main/data/"    
-
-    X = source.drop(target, axis=1)
+def split_dataset(source, target = "NObeyesdad"):
+    data_dir = "/Users/dihanislamdhrubo/Downloads/CSE422-Lab-Project-main/data/"
+    
+    
+    X = source.drop(columns=[target])
     y = source[target]
 
     X_train, X_test, y_train, y_test = train_test_split(
         X, y,
-        test_size=0.3,       # 30% test
-        random_state=42,
-        stratify=y           # preserves class distribution
+        test_size = 0.3,
+        random_state = 42,
+        stratify = y
     )
 
     X_train.to_csv(data_dir + "X_train.csv", index=False)
@@ -49,7 +51,7 @@ def split(source, target = "NObeyesdad"):
 
     print("Train set size:", X_train.shape)
     print("Test set size:", X_test.shape)
-
+    
 def outliers_plot(df):
     numeric_features = df.select_dtypes(include = ['int64', 'float64']).columns
     
