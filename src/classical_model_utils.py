@@ -1,4 +1,5 @@
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import accuracy_score
 import numpy as np
 import pandas as pd
@@ -12,6 +13,9 @@ X_train_scaled = pd.read_csv("/Users/dihanislamdhrubo/Downloads/CSE422-Lab-Proje
 X_test_scaled = pd.read_csv("/Users/dihanislamdhrubo/Downloads/CSE422-Lab-Project-main/data/X_test_scaled.csv")
 y_train = pd.read_csv("/Users/dihanislamdhrubo/Downloads/CSE422-Lab-Project-main/data/y_train.csv")
 y_test = pd.read_csv("/Users/dihanislamdhrubo/Downloads/CSE422-Lab-Project-main/data/y_test.csv")
+y_train = y_train.values.ravel()
+y_test = y_test.values.ravel()
+
 
 def knn_predict():
     boss_y = None
@@ -20,7 +24,7 @@ def knn_predict():
 
     for k in range(1, 31):
         knn = KNeighborsClassifier(n_neighbors = k)
-        knn.fit(X_train_scaled, y_train.values.ravel())
+        knn.fit(X_train_scaled, y_train)
         y_pred = knn.predict(X_test_scaled)
         accuracy = accuracy_score(y_test, y_pred)
 
@@ -31,3 +35,11 @@ def knn_predict():
     
     print("Best value of K is", boss_k)
     return boss_y, max_accuracy
+
+def nb_predict():
+    nb = GaussianNB()
+
+    nb.fit(X_train_scaled, y_train)
+    y_pred = nb.predict(X_test_scaled)
+    accuracy = accuracy_score(y_test, y_pred)
+    return y_pred, accuracy
