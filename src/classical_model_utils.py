@@ -1,7 +1,8 @@
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import accuracy_score
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, classification_report
 import numpy as np
 import pandas as pd
 
@@ -56,4 +57,19 @@ def dt_predict():
     dt.fit(X_train, y_train)
     y_pred = dt.predict(X_test)
     accuracy = accuracy_score(y_test, y_pred)
+    return y_pred, accuracy
+
+def log_predict():
+    log_reg = LogisticRegression(
+        solver = 'lbfgs',
+        max_iter = 1000,    
+        random_state = 42
+    )
+
+    log_reg.fit(X_train_scaled, y_train)
+
+    y_pred = log_reg.predict(X_test_scaled)
+
+    accuracy = accuracy_score(y_pred, y_test)
+
     return y_pred, accuracy
