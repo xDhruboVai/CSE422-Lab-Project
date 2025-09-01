@@ -1,5 +1,6 @@
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
 import numpy as np
 import pandas as pd
@@ -11,6 +12,8 @@ from src import evaluations
 
 X_train_scaled = pd.read_csv("/Users/dihanislamdhrubo/Downloads/CSE422-Lab-Project-main/data/X_train_scaled.csv")
 X_test_scaled = pd.read_csv("/Users/dihanislamdhrubo/Downloads/CSE422-Lab-Project-main/data/X_test_scaled.csv")
+X_train = pd.read_csv("/Users/dihanislamdhrubo/Downloads/CSE422-Lab-Project-main/data/X_train.csv")
+X_test = pd.read_csv("/Users/dihanislamdhrubo/Downloads/CSE422-Lab-Project-main/data/X_test.csv")
 y_train = pd.read_csv("/Users/dihanislamdhrubo/Downloads/CSE422-Lab-Project-main/data/y_train.csv")
 y_test = pd.read_csv("/Users/dihanislamdhrubo/Downloads/CSE422-Lab-Project-main/data/y_test.csv")
 y_train = y_train.values.ravel()
@@ -41,5 +44,16 @@ def nb_predict():
 
     nb.fit(X_train_scaled, y_train)
     y_pred = nb.predict(X_test_scaled)
+    accuracy = accuracy_score(y_test, y_pred)
+    return y_pred, accuracy
+
+def dt_predict():
+    dt = DecisionTreeClassifier(
+    criterion = "entropy", 
+    max_depth = None,
+    random_state = 42
+)
+    dt.fit(X_train, y_train)
+    y_pred = dt.predict(X_test)
     accuracy = accuracy_score(y_test, y_pred)
     return y_pred, accuracy
