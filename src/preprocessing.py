@@ -5,24 +5,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler
 
-def scale_standard(df, features):
-    scaler = StandardScaler()
-    df_scaled = df.copy()
-    df_scaled[features] = scaler.fit_transform(df[features])
-    return df_scaled
-
-def scale_minmax(df, features):
-    scaler = MinMaxScaler()
-    df_scaled = df.copy()
-    df_scaled[features] = scaler.fit_transform(df[features])
-    return df_scaled
-
-def scale_robust(df, features):
-    scaler = RobustScaler()
-    df_scaled = df.copy()
-    df_scaled[features] = scaler.fit_transform(df[features])
-    return df_scaled
-
 def correlation_plot(source):
     corr = source.corr(numeric_only = True)
 
